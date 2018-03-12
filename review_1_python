@@ -227,7 +227,7 @@ def prepare():
         pygame.display.flip()
 
 # основной цикл игры
-def lunch(score = 0):
+def launch(score = 0):
 
     # запускаем таймер, оговариваем выход, считаем ходы
     timer = pygame.time.Clock()
@@ -284,5 +284,5 @@ if __name__ == '__main__':
     while new_game:
         prepare()
         if new_game:
-            lunch()
+            launch()
             

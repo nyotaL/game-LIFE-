@@ -1,4 +1,3 @@
-
 # импорт нужных библиотек
 import pygame
 import random
@@ -153,7 +152,8 @@ class Box:
         # теперь обновляем поле, зная информацию о соседях каждой клетки
         for x in range(NUMBER_X):
             for y in range(NUMBER_Y):
-                if self.box[x][y].cell_type == '0':
+                if self.box[x][y].cell_type != 'креветка' and self.box[x][y].cell_type != 'рыба'\
+                        and self.box[x][y].cell_type != 'скала':
                     if self.near[x][y][0] == NEAR_TO_BORN:
                         self.box[x][y].cell_type = 'рыба'
                     elif self.near[x][y][1] == NEAR_TO_BORN:

@@ -1,3 +1,4 @@
+
 # импорт нужных библиотек
 import pygame
 import random
@@ -202,8 +203,10 @@ def prepare():
                         screen_box.box[pos[0] // CELL_SIZE][(pos[1] - TEXT_ZONE) // CELL_SIZE].cell_type = 'креветка'
                     elif screen_box.box[pos[0] // CELL_SIZE][(pos[1] - TEXT_ZONE) // CELL_SIZE].cell_type == 'креветка':
                         screen_box.box[pos[0] // CELL_SIZE][(pos[1] - TEXT_ZONE) // CELL_SIZE].cell_type = 'скала'
-                    else:
+                    elif screen_box.box[pos[0] // CELL_SIZE][(pos[1] - TEXT_ZONE) // CELL_SIZE].cell_type == 'скала':
                         screen_box.box[pos[0] // CELL_SIZE][(pos[1] - TEXT_ZONE) // CELL_SIZE].cell_type = '0'
+                    else:
+                        screen_box.box[pos[0] // CELL_SIZE][(pos[1] - TEXT_ZONE) // CELL_SIZE].cell_type = 'рыба'
 
         # организовываем наш ящик
         fon = pygame.Surface((SCREEN_X, SCREEN_Y))

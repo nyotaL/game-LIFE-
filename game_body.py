@@ -3,7 +3,6 @@
 # импорт нужных библиотек и файлов
 import pygame
 import structure
-import tkinter
 
 # если считываем из файла
 DATA_FILE = 'data.txt'

@@ -80,7 +80,7 @@ def prepare():
         pygame.display.flip()
 
 # основной цикл игры
-def lunch(turn, n, score = 0):
+def launch(turn, n, score = 0):
 
     # запускаем таймер, оговариваем выход, считаем ходы
     timer = pygame.time.Clock()
@@ -185,4 +185,4 @@ if __name__ == '__main__':
     while new_game:
         prepare()
         if new_game:
-            lunch(turn, int(n))
+            launch(turn, int(n))

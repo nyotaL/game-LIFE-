@@ -1,23 +1,34 @@
-import set
 import random
 import pygame
 from enum import Enum
 
+class parametrs:
+    # определяем параметры и дизайн поля, его компонент
+    SCREEN_X = -1300
+    SCREEN_Y = 850
+    CELL_SIZE = 10
+
+def seting(a, b):
+    if a <= 0:
+        return b
+    else:
+        return a
+
 #константы для цвета и типа клеток
-class C_t(Enum):
+class Cell_creature(Enum):
     none = 1
     fish = 2
     prawn = 3
     rock = 4
-class C_c:
+class Creature_color:
     fish = (60, 150, 200)
     prawn = (200, 100, 0)
     rock = (0, 0, 0)
 
 # определяем параметры и дизайн поля, его компонент. Учитываем, что можем захотеть их поменять
-SCREEN_X = set.set(set.parametrs.SCREEN_X, 1300)
-SCREEN_Y = set.set(set.parametrs.SCREEN_Y, 850)
-CELL_SIZE = set.set(set.parametrs.CELL_SIZE, 10)
+SCREEN_X = seting(parametrs.SCREEN_X, 1300)
+SCREEN_Y = seting(parametrs.SCREEN_Y, 850)
+CELL_SIZE = seting(parametrs.CELL_SIZE, 10)
 
 # количество клеток по-горизонтали и по-вертикали
 NUMBER_X = SCREEN_X // CELL_SIZE
@@ -37,18 +48,18 @@ class Cell:
 
     # рисование клетки
     def render(self, where):
-        if self.cell_type == C_t.prawn:
-            color = C_c.prawn
+        if self.cell_type == Cell_creature.prawn:
+            color = Creature_color.prawn
             self.sur = pygame.Surface((CELL_SIZE, CELL_SIZE))
             self.sur.fill(color)
             where.blit(self.sur, (self.x, self.y))
-        elif self.cell_type == C_t.fish:
-            color = C_c.fish
+        elif self.cell_type == Cell_creature.fish:
+            color = Creature_color.fish
             self.sur = pygame.Surface((CELL_SIZE, CELL_SIZE))
             self.sur.fill(color)
             where.blit(self.sur, (self.x, self.y))
-        elif self.cell_type == C_t.rock:
-            color = C_c.rock
+        elif self.cell_type == Cell_creature.rock:
+            color = Creature_color.rock
             self.sur = pygame.Surface((CELL_SIZE, CELL_SIZE))
             self.sur.fill(color)
             where.blit(self.sur, (self.x, self.y))
@@ -56,7 +67,7 @@ class Cell:
 # класс ящика *Океан*
 class Box:
     def __init__(self):
-        self.box = [[Cell(x, y, C_t.none) for y in range(NUMBER_Y)] for x in range(NUMBER_X)]
+        self.box = [[Cell(x, y, Cell_creature.none) for y in range(NUMBER_Y)] for x in range(NUMBER_X)]
         self.near = [[[int(0) for z in range(1, 3)] for y in range(NUMBER_Y)] for x in range(NUMBER_X)]
         self.total = int(0)
 
@@ -73,17 +84,17 @@ class Box:
             for y in range(NUMBER_Y):
                 a = random.randint(0, 3)
                 if a == 0:
-                    self.box[x][y].cell_type = C_t.none
+                    self.box[x][y].cell_type = Cell_creature.none
                 elif a == 1:
-                    self.box[x][y].cell_type = C_t.fish
+                    self.box[x][y].cell_type = Cell_creature.fish
                     self.total += 1
                 elif a == 2:
-                    self.box[x][y].cell_type = C_t.prawn
+                    self.box[x][y].cell_type = Cell_creature.prawn
                     self.total += 1
                 else:
                     b = random.randint(0, 60)
                     if b == 4:
-                        self.box[x][y].cell_type = C_t.rock
+                        self.box[x][y].cell_type = Cell_creature.rock
 
     # очистка
     def clear(self):
@@ -95,7 +106,14 @@ class Box:
             data.write(str(NUMBER_X) + '\n' + str(NUMBER_Y) + '\n')
             for x in range(NUMBER_X):
                 for y in range(NUMBER_Y):
-                    data.write(str(self.box[x][y].cell_type))
+                    if self.box[x][y].cell_type == Cell_creature.fish:
+                        data.write('F')
+                    elif self.box[x][y].cell_type == Cell_creature.prawn:
+                        data.write('P')
+                    elif self.box[x][y].cell_type == Cell_creature.none:
+                        data.write('0')
+                    else:
+                        data.write('R')
 
     # считывание из файла
     def load(self, datafile):
@@ -107,19 +125,22 @@ class Box:
                 else:
                     for x in range(NUMBER_X):
                         for y in range(NUMBER_Y):
-                            if data[2][x * NUMBER_Y + y] == 'креветка':
-                                self.box[x][y].cell_type = C_t.prawn
+                            print(data[2][x * NUMBER_Y + y], end =' ')
+                            print('mew')
+                            if data[2][x * NUMBER_Y + y] == 'P':
+                                self.box[x][y].cell_type = Cell_creature.prawn
                                 self.total += 1
-                            elif data[2][x * NUMBER_Y + y] == 'рыба':
-                                self.box[x][y].cell_type = C_t.fish
+                            elif data[2][x * NUMBER_Y + y] == 'F':
+                                self.box[x][y].cell_type = Cell_creature.fish
                                 self.total += 1
-                            elif data[2][x * NUMBER_Y + y] == 'скала':
-                                self.box[x][y].cell_type = C_t.rock
+                            elif data[2][x * NUMBER_Y + y] == 'R':
+                                self.box[x][y].cell_type = Cell_creature.rock
                             else:
-                                self.box[x][y].cell_type = C_t.none
+                                self.box[x][y].cell_type = Cell_creature.none
         except:
             print('Файл для загрузки отсутствует или имеет неверный формат')
 
+    #elif data[2][x * NUMBER_Y + y] == 'R':
     # параллельное обновление конфигурации. Сперва подсчет соседей
     def update(self, where):
         for x in range(NUMBER_X):
@@ -146,27 +167,27 @@ class Box:
                         else:
                             temp_y = y + j
 
-                        if self.box[temp_x][temp_y].cell_type == C_t.fish:
+                        if self.box[temp_x][temp_y].cell_type == Cell_creature.fish:
                             self.near[x][y][0] += 1
-                        elif self.box[temp_x][temp_y].cell_type == C_t.prawn:
+                        elif self.box[temp_x][temp_y].cell_type == Cell_creature.prawn:
                             self.near[x][y][1] += 1
 
         # теперь обновляем поле, зная информацию о соседях каждой клетки
         self.total = int(0)
         for x in range(NUMBER_X):
             for y in range(NUMBER_Y):
-                if self.box[x][y].cell_type != C_t.prawn and self.box[x][y].cell_type != C_t.fish\
-                        and self.box[x][y].cell_type != C_t.rock:
+                if self.box[x][y].cell_type != Cell_creature.prawn and self.box[x][y].cell_type != Cell_creature.fish\
+                        and self.box[x][y].cell_type != Cell_creature.rock:
                     if self.near[x][y][0] == NEAR_TO_BORN:
-                        self.box[x][y].cell_type = C_t.fish
+                        self.box[x][y].cell_type = Cell_creature.fish
                     elif self.near[x][y][1] == NEAR_TO_BORN:
-                        self.box[x][y].cell_type = C_t.prawn
+                        self.box[x][y].cell_type = Cell_creature.prawn
                 elif (self.near[x][y][1] != NEAR_TO_LIVE and self.near[x][y][1] != NEAR_TO_BORN and \
-                      self.box[x][y].cell_type == C_t.prawn) or \
+                      self.box[x][y].cell_type == Cell_creature.prawn) or \
                         (self.near[x][y][0] != NEAR_TO_LIVE and self.near[x][y][0] != NEAR_TO_BORN and \
-                         self.box[x][y].cell_type == C_t.fish):
-                    self.box[x][y].cell_type = C_t.none
+                         self.box[x][y].cell_type == Cell_creature.fish):
+                    self.box[x][y].cell_type = Cell_creature.none
                     self.total += -1
-                if self.box[x][y].cell_type != C_t.none:
+                if self.box[x][y].cell_type != Cell_creature.none:
                     self.total += 1
 

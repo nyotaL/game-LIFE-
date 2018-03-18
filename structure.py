@@ -4,7 +4,7 @@ from enum import Enum
 
 class parametrs:
     # определяем параметры и дизайн поля, его компонент
-    SCREEN_X = -1300
+    SCREEN_X = 1300
     SCREEN_Y = 850
     CELL_SIZE = 10
 

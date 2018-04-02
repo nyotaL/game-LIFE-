@@ -197,3 +197,4 @@ if __name__ == '__main__':
         prepare()
         if new_game:
             launch(turn, int(n))
+            

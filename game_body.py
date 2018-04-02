@@ -89,6 +89,7 @@ def prepare():
 def launch(turn, n, score = 0):
 
     # запускаем таймер, оговариваем выход, считаем ходы
+    # во время игры мы можем или выйти, исчерпав ходы или нажав крестик, а можем поставить игру на паузу
     timer = pygame.time.Clock()
     exit = False
     pause = False
@@ -106,7 +107,8 @@ def launch(turn, n, score = 0):
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_p:
                         pause = False
-        # во время игры мы можем или выйти, исчерпав ходы или нажав крестик, а можем поставить игру на паузу
+                    elif event.key == pygame.K_s:
+                        screen_box.save(DATA_FILE)
         if turn == n - 1:
             exit = True
 

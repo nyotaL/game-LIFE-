@@ -8,6 +8,7 @@ class Screen_arguments:
     SCREEN_Y = 850
     CELL_SIZE = 10
 
+#чтобы пользователь все равно мог поиграть, ошибочно введя параметры поля
 def seting(a, b):
     if type(a) != int or a < 10:
         return b
@@ -125,8 +126,6 @@ class Box:
                 else:
                     for x in range(NUMBER_X):
                         for y in range(NUMBER_Y):
-                            print(data[2][x * NUMBER_Y + y], end =' ')
-                            print('mew')
                             if data[2][x * NUMBER_Y + y] == 'P':
                                 self.box[x][y].cell_type = Cell_creature.prawn
                                 self.total += 1
@@ -140,7 +139,6 @@ class Box:
         except:
             print('Файл для загрузки отсутствует или имеет неверный формат')
 
-    #elif data[2][x * NUMBER_Y + y] == 'R':
     # параллельное обновление конфигурации. Сперва подсчет соседей
     def update(self, where):
         for x in range(NUMBER_X):
@@ -149,24 +147,20 @@ class Box:
                 self.near[x][y][1] = 0
                 for i in range(-1, 2):
                     for j in range(-1, 2):
-
                         if j == 0 and i == 0:
                             continue
-
                         if (x + i) < 0:
                             temp_x = NUMBER_X - 1
                         elif (x + i) >= NUMBER_X:
                             temp_x = 0
                         else:
                             temp_x = x + i
-
                         if (y + j) < 0:
                             temp_y = NUMBER_Y - 1
                         elif (y + j) >= NUMBER_Y:
                             temp_y = 0
                         else:
                             temp_y = y + j
-
                         if self.box[temp_x][temp_y].cell_type == Cell_creature.fish:
                             self.near[x][y][0] += 1
                         elif self.box[temp_x][temp_y].cell_type == Cell_creature.prawn:
@@ -190,4 +184,3 @@ class Box:
                     self.total += -1
                 if self.box[x][y].cell_type != Cell_creature.none:
                     self.total += 1
-

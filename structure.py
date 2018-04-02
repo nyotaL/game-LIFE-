@@ -184,3 +184,4 @@ class Box:
                     self.total += -1
                 if self.box[x][y].cell_type != Cell_creature.none:
                     self.total += 1
+                    

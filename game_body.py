@@ -29,8 +29,9 @@ def prepare():
 
     # оговариваем выход из цикла и реакцию на команды. Считаем ходы
     exit = False
+    pause = False
     while not exit:
-        
+
         # крестик - выход, пробел - запуск, r - рандомное заполнение, l - считать из файла, s - записать, c - очистить
         # оговариваем заполнение поля вручную
 
@@ -64,6 +65,7 @@ def prepare():
                         screen_box.box[pos[0] // CELL_SIZE][(pos[1] - TEXT_ZONE) // CELL_SIZE].cell_type = Cell_creature.none
                     else:
                         screen_box.box[pos[0] // CELL_SIZE][(pos[1] - TEXT_ZONE) // CELL_SIZE].cell_type = Cell_creature.fish
+                        # your game code
 
         # организовываем наш ящик
         fon = pygame.Surface((SCREEN_X, SCREEN_Y))
@@ -82,22 +84,31 @@ def prepare():
         window.blit(font_base, (0, 0))
         window.blit(screen, (0, TEXT_ZONE))
         pygame.display.flip()
-        
+
 # основной цикл игры
 def launch(turn, n, score = 0):
 
     # запускаем таймер, оговариваем выход, считаем ходы
     timer = pygame.time.Clock()
     exit = False
+    pause = False
     while not exit:
-        # во время игры мы можем или выйти, исчерпав ходы или нажав крестик
-        if turn == n - 1:
-            exit = True
         for event in pygame.event.get():
+            if event.type == pygame.KEYUP:
+                if event.key == pygame.K_p:
+                    pause = True
             if event.type == pygame.QUIT:
                 global new_game
                 new_game = False
                 exit = True
+        while pause == True:
+            for event in pygame.event.get():
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_p:
+                        pause = False
+        # во время игры мы можем или выйти, исчерпав ходы или нажав крестик
+        if turn == n - 1:
+            exit = True
 
         # наводим красоту в ящике, не забываем посчитать ход
         fon = pygame.Surface((SCREEN_X, SCREEN_Y))
@@ -109,7 +120,7 @@ def launch(turn, n, score = 0):
         font_base.fill(TEXT_BACKGROUND_COLOR)
         score_font = pygame.font.SysFont("comicsansms", FONT_SIZE)
         result = score_font.render(
-            "Нажмите пробел для паузы и/или режима установки доволнительны клеток. Ход: " + str(turn), 1, TEXT_COLOR_1)
+            "Нажмите p для паузы. Ход: " + str(turn), 1, TEXT_COLOR_1)
         result_2 = score_font.render("Количество живых клеток: " + str(screen_box.total), 1, TEXT_COLOR_2)
         font_base.blit(result, (0, 0))
         font_base.blit(result_2, (0, FONT_SIZE))

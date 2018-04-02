@@ -148,7 +148,7 @@ if __name__ == '__main__':
     from tkinter.constants import *
 
     class App(tkinter.Frame):
-        def __init__(self, master = None):
+            def __init__(self, master = None):
             tkinter.Frame.__init__(self, master)
             self.pack(fill = BOTH)
             self.create_widgets()
@@ -197,3 +197,5 @@ if __name__ == '__main__':
         prepare()
         if new_game:
             launch(turn, int(n))
+
+            

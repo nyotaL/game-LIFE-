@@ -106,7 +106,7 @@ def launch(turn, n, score = 0):
                 if event.type == pygame.KEYUP:
                     if event.key == pygame.K_p:
                         pause = False
-        # во время игры мы можем или выйти, исчерпав ходы или нажав крестик
+        # во время игры мы можем или выйти, исчерпав ходы или нажав крестик, а можем поставить игру на паузу
         if turn == n - 1:
             exit = True
 
@@ -120,7 +120,7 @@ def launch(turn, n, score = 0):
         font_base.fill(TEXT_BACKGROUND_COLOR)
         score_font = pygame.font.SysFont("comicsansms", FONT_SIZE)
         result = score_font.render(
-            "Нажмите p для паузы. Ход: " + str(turn), 1, TEXT_COLOR_1)
+            "Нажмите p для паузы/возобновления и s для сохранения конфигурации. Ход: " + str(turn), 1, TEXT_COLOR_1)
         result_2 = score_font.render("Количество живых клеток: " + str(screen_box.total), 1, TEXT_COLOR_2)
         font_base.blit(result, (0, 0))
         font_base.blit(result_2, (0, FONT_SIZE))

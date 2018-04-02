@@ -2,14 +2,14 @@ import random
 import pygame
 from enum import Enum
 
-class parametrs:
+class Screen_arguments:
     # определяем параметры и дизайн поля, его компонент
     SCREEN_X = 1300
     SCREEN_Y = 850
     CELL_SIZE = 10
 
 def seting(a, b):
-    if a <= 0:
+    if type(a) != int or a < 10:
         return b
     else:
         return a
@@ -26,9 +26,9 @@ class Creature_color:
     rock = (0, 0, 0)
 
 # определяем параметры и дизайн поля, его компонент. Учитываем, что можем захотеть их поменять
-SCREEN_X = seting(parametrs.SCREEN_X, 1300)
-SCREEN_Y = seting(parametrs.SCREEN_Y, 850)
-CELL_SIZE = seting(parametrs.CELL_SIZE, 10)
+SCREEN_X = seting(Screen_arguments.SCREEN_X, 1300)
+SCREEN_Y = seting(Screen_arguments.SCREEN_Y, 850)
+CELL_SIZE = seting(Screen_arguments.CELL_SIZE, 10)
 
 # количество клеток по-горизонтали и по-вертикали
 NUMBER_X = SCREEN_X // CELL_SIZE
@@ -92,7 +92,7 @@ class Box:
                     self.box[x][y].cell_type = Cell_creature.prawn
                     self.total += 1
                 else:
-                    b = random.randint(0, 60)
+                    b = random.randint(0, 1000)
                     if b == 4:
                         self.box[x][y].cell_type = Cell_creature.rock
 

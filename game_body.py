@@ -4,7 +4,7 @@
 
 import pygame
 import structure
-import tkinter
+#import tkinter - будет импортирован ниже
 
 # если считываем из файла
 

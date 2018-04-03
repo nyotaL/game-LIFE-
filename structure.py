@@ -2,7 +2,7 @@ import random
 import pygame
 from enum import Enum
 
-class Screen_arguments:
+class ScreenArguments:
     # определяем параметры и дизайн поля, его компонент
     SCREEN_X = 1300
     SCREEN_Y = 850
@@ -27,9 +27,9 @@ class Creature_color:
     rock = (0, 0, 0)
 
 # определяем параметры и дизайн поля, его компонент. Учитываем, что можем захотеть их поменять
-SCREEN_X = seting(Screen_arguments.SCREEN_X, 1300)
-SCREEN_Y = seting(Screen_arguments.SCREEN_Y, 850)
-CELL_SIZE = seting(Screen_arguments.CELL_SIZE, 10)
+SCREEN_X = seting(ScreenArguments.SCREEN_X, 1300)
+SCREEN_Y = seting(ScreenArguments.SCREEN_Y, 850)
+CELL_SIZE = seting(ScreenArguments.CELL_SIZE, 10)
 
 # количество клеток по-горизонтали и по-вертикали
 NUMBER_X = SCREEN_X // CELL_SIZE

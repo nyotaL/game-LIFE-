@@ -149,10 +149,10 @@ if __name__ == '__main__':
 
     class App(tkinter.Frame):
         def __init__(self, master = None):
-        tkinter.Frame.__init__(self, master)
-        self.pack(fill = BOTH)
-        self.create_widgets()
-        self.a = 0
+            tkinter.Frame.__init__(self, master)
+            self.pack(fill = BOTH)
+            self.create_widgets()
+            self.a = 0
         def create_widgets(self):
             self.var = tkinter.StringVar()
             self.var.set('кол-во ходов')
